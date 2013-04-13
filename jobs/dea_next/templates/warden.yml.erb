@@ -3,8 +3,11 @@ server:
   unix_domain_permissions: 0777
   unix_domain_path: /var/vcap/data/warden/warden.sock
   container_klass: Warden::Container::Linux
-  container_rootfs_path: /var/vcap/data/warden/rootfs
-  container_depot_path: /var/vcap/data/warden/depot
+  container_rootfs_path: /tmp/warden/rootfs
+  container_depot_path: /tmp/warden/containers
+  quota:
+    disk_quota_enabled: false
+  allow_nested_warden: false
 
 logging:
   file: /var/vcap/sys/log/warden/warden.log
