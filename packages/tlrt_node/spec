@@ -4,6 +4,6 @@ dependencies:
 - sqlite
 - ruby
 files:
-- services/tlrt/**/*
+- services/ng/tlrt/**/*
 - pkg_utils/*
 

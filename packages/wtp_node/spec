@@ -5,6 +5,6 @@ dependencies:
 - ruby
 - dea_jvm
 files:
-- services/wtp/**/*
+- services/ng/wtp/**/*
 - pkg_utils/*
 
