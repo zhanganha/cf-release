@@ -3,6 +3,7 @@ name: wtp_node
 dependencies:
 - sqlite
 - ruby
+- dea_jvm
 files:
 - services/wtp/**/*
 - pkg_utils/*
