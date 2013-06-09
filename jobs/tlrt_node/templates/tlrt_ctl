@@ -1,0 +1,27 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/tlrt
+PIDFILE=$RUN_DIR/tlrt.pid
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR
+    cd /var/vcap/packages/tlrt
+    ./startup.sh
+    ps x|grep tlrtbroke |grep -v grep |awk '{print $1}' > $PIDFILE
+
+    ;;
+
+  stop)
+    cd /var/vcap/packages/tlrt
+    ./shutdown.sh
+
+    ;;
+
+  *)
+    echo "Usage: tlrt_ctl {start|stop}"
+
+    ;;
+
+esac

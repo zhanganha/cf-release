@@ -1,0 +1,28 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/wtp
+PIDFILE=$RUN_DIR/WTPFileSrv.pid
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR
+    cd /var/vcap/packages/wtp/WTPFileSrv
+    cp /var/vcap/jobs/wtp_node/config/wtpfilesrv.conf etc/
+    ./startup
+    ps x|grep wtpfsdaemon |grep -v grep |awk '{print $1}' > $PIDFILE
+
+    ;;
+
+  stop)
+    cd /var/vcap/packages/wtp/WTPFileSrv
+    ./shutdown.sh
+
+    ;;
+
+  *)
+    echo "Usage: WTPFileSrv_ctl {start|stop}"
+
+    ;;
+
+esac

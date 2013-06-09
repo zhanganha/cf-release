@@ -1,0 +1,29 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/wtp
+PIDFILE=$RUN_DIR/WTPManager.pid
+
+case $1 in
+
+  start)
+    mkdir -p $RUN_DIR
+    cd /var/vcap/packages/wtp/WTPManager/bin
+    cp /var/vcap/jobs/wtp_node/config/wtpmanager.conf /var/vcap/packages/wtp/WTPFileSrv/etc/
+    cp /var/vcap/jobs/wtp_node/config/mysql_init /var/vcap/packages/wtp/WTPManager/DataBase/config
+    ./startserver.sh
+    ps x|grep tl_clibroker |grep -v grep |awk '{print $1}' > $PIDFILE
+
+    ;;
+
+  stop)
+    cd /var/vcap/packages/wtp/WTPManager/bin
+    ./stopserver.sh
+
+    ;;
+
+  *)
+    echo "Usage: WTPManager_ctl {start|stop}"
+
+    ;;
+
+esac

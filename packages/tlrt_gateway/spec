@@ -1,0 +1,8 @@
+---
+name: tlrt_gateway
+dependencies:
+- sqlite
+- ruby
+files:
+- services/tlrt/**/*
+- pkg_utils/*

@@ -1,0 +1,5 @@
+check process wtp_gateway
+  with pidfile /var/vcap/sys/run/wtp_gateway/wtp_gateway.pid
+  start program "/var/vcap/jobs/wtp_gateway/bin/wtp_gateway_ctl start"
+  stop program "/var/vcap/jobs/wtp_gateway/bin/wtp_gateway_ctl stop"
+  group vcap

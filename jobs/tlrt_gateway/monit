@@ -1,0 +1,5 @@
+check process tlrt_gateway
+  with pidfile /var/vcap/sys/run/tlrt_gateway/tlrt_gateway.pid
+  start program "/var/vcap/jobs/tlrt_gateway/bin/tlrt_gateway_ctl start"
+  stop program "/var/vcap/jobs/tlrt_gateway/bin/tlrt_gateway_ctl stop"
+  group vcap

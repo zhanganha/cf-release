@@ -1,0 +1,22 @@
+---
+name: wtp_node
+
+templates:
+  wtp_node_ctl: bin/wtp_node_ctl
+  wtp_node.yml.erb: config/wtp_node.yml
+  WTPFileSrv_ctl: bin/WTPFileSrv_ctl
+  WTPManager_ctl: bin/WTPManager_ctl
+  wtpfilesrv.conf.erb: config/wtpfilesrv.conf
+  wtpmanager.conf.erb: config/wtpmanager.conf
+  mysql_init.erb: config/mysql_init
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+  logrotate.conf.erb: config/logrotate.conf
+
+packages:
+  - common
+  - wtp_node
+  - wtp
+  - ruby
+  - sqlite
+  - syslog_aggregator
+  - dea_jvm

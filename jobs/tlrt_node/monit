@@ -1,0 +1,25 @@
+check process tlrt_node
+  with pidfile /var/vcap/sys/run/tlrt_node/tlrt_node.pid
+  start program "/var/vcap/jobs/tlrt_node/bin/tlrt_node_ctl start"
+  stop program "/var/vcap/jobs/tlrt_node/bin/tlrt_node_ctl stop"
+  group vcap
+
+check process tlrt
+  with pidfile /var/vcap/sys/run/tlrt/tlrt.pid
+  start program "/var/vcap/jobs/tlrt_node/bin/tlrt_ctl start"
+  stop program "/var/vcap/jobs/tlrt_node/bin/tlrt_ctl stop"
+  group vcap
+
+<%
+service = "tlrt"
+plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
+plan = properties.plan || "free"
+plan_conf = plan_enabled && properties.service_plans.send(service.to_sym).send(plan.to_sym).configuration
+if properties.service_lifecycle and plan_enabled and plan_conf.lifecycle and plan_conf.lifecycle.enable
+  worker_count = plan_conf.lifecycle.worker_count || 1
+  worker_count.times do |ind|
+%>
+<%
+  end
+end
+%>

@@ -1,0 +1,30 @@
+check process wtp_node
+  with pidfile /var/vcap/sys/run/wtp_node/wtp_node.pid
+  start program "/var/vcap/jobs/wtp_node/bin/wtp_node_ctl start"
+  stop program "/var/vcap/jobs/wtp_node/bin/wtp_node_ctl stop"
+  group vcap
+
+check process WTPManager
+  with pidfile /var/vcap/sys/run/wtp/WTPManager.pid
+  start program "/var/vcap/jobs/wtp_node/bin/WTPManager_ctl start"
+  stop program "/var/vcap/jobs/wtp_node/bin/WTPManager_ctl stop"
+  group vcap
+
+check process WTPFileSrv
+  with pidfile /var/vcap/sys/run/wtp/WTPFileSrv.pid
+  start program "/var/vcap/jobs/wtp_node/bin/WTPFileSrv_ctl start"
+  stop program "/var/vcap/jobs/wtp_node/bin/WTPFileSrv_ctl stop"
+  group vcap
+<%
+service = "wtp"
+plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
+plan = properties.plan || "free"
+plan_conf = plan_enabled && properties.service_plans.send(service.to_sym).send(plan.to_sym).configuration
+if properties.service_lifecycle and plan_enabled and plan_conf.lifecycle and plan_conf.lifecycle.enable
+  worker_count = plan_conf.lifecycle.worker_count || 1
+  worker_count.times do |ind|
+%>
+<%
+  end
+end
+%>

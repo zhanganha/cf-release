@@ -1,0 +1,14 @@
+---
+name: tlrt_gateway
+
+templates:
+  tlrt_gateway_ctl: bin/tlrt_gateway_ctl
+  tlrt_gateway.yml.erb: config/tlrt_gateway.yml
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+
+packages:
+  - common
+  - tlrt_gateway
+  - ruby
+  - sqlite
+  - syslog_aggregator

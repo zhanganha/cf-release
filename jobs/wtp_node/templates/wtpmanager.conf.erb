@@ -1,0 +1,11 @@
+[MngCenter]
+<%
+require "rubygems"
+require "open3"
+cmd =" ifconfig | awk '/inet/{print $2}' | awk -F: '{print $2}'"
+stdin, stdout, stderr = Open3.popen3(cmd)
+wtpmanager_ip = stdout.gets
+%>
+ConnectFlag=1			#是否连接到传输管理中心。1：连接；0：不连接
+IP = <%= wtpmanager_ip %> #传输管理中心——监控服务地址
+Port = 10261		#传输管理中心——监控服务端口

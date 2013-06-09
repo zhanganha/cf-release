@@ -1,0 +1,44 @@
+#!/bin/bash
+
+export PATH=/var/vcap/packages/ruby/bin:$PATH
+
+RUN_DIR=/var/vcap/sys/run/wtp_gateway
+LOG_DIR=/var/vcap/sys/log/wtp_gateway
+PIDFILE=$RUN_DIR/wtp_gateway.pid
+
+JOB_DIR=/var/vcap/jobs/wtp_gateway
+
+source /var/vcap/packages/common/utils.sh
+
+case $1 in
+
+  start)
+    pid_guard $PIDFILE "Wtp gateway"
+
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+
+    echo $$ > $PIDFILE
+
+    <% if properties.syslog_aggregator %>
+    /var/vcap/packages/syslog_aggregator/setup_syslog_forwarder.sh $JOB_DIR/config
+    <% end %>
+
+    exec /var/vcap/packages/wtp_gateway/services/ng/wtp/bin/wtp_gateway \
+         -c $JOB_DIR/config/wtp_gateway.yml \
+         >>$LOG_DIR/wtp_gateway.stdout.log \
+         2>>$LOG_DIR/wtp_gateway.stderr.log
+
+    ;;
+
+  stop)
+    kill_and_wait $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: wtp_gateway_ctl {start|stop}"
+
+    ;;
+
+esac

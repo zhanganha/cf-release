@@ -1,0 +1,44 @@
+---
+<%
+service = "wtp"
+plan_enabled = properties.service_plans && properties.service_plans.send(service.to_sym)
+plan = properties.plan || "free"
+plan_conf = plan_enabled && properties.service_plans.send(service.to_sym).send(plan.to_sym).configuration
+node = properties.wtp_node
+supported_versions = node.supported_versions
+default_version = node.default_version
+packages = {}
+%>
+capacity: <%= plan_enabled && plan_conf.capacity || 200 %>
+plan: '<%= plan %>'
+local_db: sqlite3:/var/vcap/services/wtp/wtp_node.db
+mbus: nats://<%= properties.nats.user %>:<%= properties.nats.password %>@<%= properties.nats.address %>:<%= properties.nats.port %>
+index: <%= spec.index %>
+base_dir: /var/vcap/services/wtp/instances
+logging:
+  level: debug
+  <% if properties.syslog_aggregator %>
+  syslog: vcap.wtp_node
+  <% end %>
+wtp_log_dir: /var/vcap/services/wtp/logs
+pid: /var/vcap/sys/run/wtp_node/wtp_node.pid
+max_memory: 128
+node_id: <%= "#{service}_node#{'_' + plan if plan != 'free'}_#{spec.index.to_i + 1}" %>
+default_version: <%= "'#{default_version}'"%>
+supported_versions: <%= "['#{supported_versions.join("' , '")}']" %>
+
+wtp_path: /var/vcap/packages/wtp/startup.sh
+wtp_shutdown_path: /var/vcap/packages/wtp/shutdown.sh
+store_path: /var/vcap/packages/wtp
+
+port_range:
+  first: 25001
+  last: 45000
+<% if node.ip_route %>
+ip_route: <%= node.ip_route %>
+<% end %>
+z_interval: <%= node.z_interval || 30 %>
+max_nats_payload: <%= properties.nats.max_payload || 1048576 %>
+fqdn_hosts: <%= properties.services && properties.services.fqdn_hosts || "false" %>
+op_time_limit: <%= node.op_time_limit || 6 %>
+migration_nfs: /mnt/migration

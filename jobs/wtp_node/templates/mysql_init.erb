@@ -1,0 +1,13 @@
+UPDATE mysql.user SET Password=PASSWORD('aaa13djkas') WHERE User='root';
+<%
+require "rubygems"
+require "open3"
+cmd =" ifconfig | awk '/inet/{print $2}' | awk -F: '{print $2}'"
+stdin, stdout, stderr = Open3.popen3(cmd)
+wtpfile_ip = stdout.gets.chomp
+%>
+UPDATE wtpmng.wtpsys_conf_fileserver SET ip='<%= wtpfile_ip %>', store_root='/var/vcap/data' WHERE ip='127.000.000.001';
+grant all privileges on *.* to root@"%" identified by "aaa13djkas" with grant option;
+FLUSH PRIVILEGES;
+
+DROP DATABASE IF EXISTS test;

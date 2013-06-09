@@ -1,0 +1,9 @@
+---
+name: tlrt_node
+dependencies:
+- sqlite
+- ruby
+files:
+- services/tlrt/**/*
+- pkg_utils/*
+

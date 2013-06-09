@@ -1,0 +1,8 @@
+---
+name: wtp_gateway
+dependencies:
+- sqlite
+- ruby
+files:
+- services/wtp/**/*
+- pkg_utils/*
