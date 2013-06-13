@@ -39,7 +39,7 @@ case $1 in
     check_mount "$MT_OPTS" "$MT_EXPORT" "$SNAPSHOT_DIR"
     <% end %>
 
-    exec /var/vcap/packages/wtp_node/services/wtp/bin/wtp_node \
+    exec /var/vcap/packages/wtp_node/services/ng/wtp/bin/wtp_node \
          -c $JOB_DIR/config/wtp_node.yml \
          >>$LOG_DIR/wtp_node.stdout.log \
          2>>$LOG_DIR/wtp_node.stderr.log

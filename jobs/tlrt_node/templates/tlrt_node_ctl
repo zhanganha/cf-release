@@ -39,7 +39,7 @@ case $1 in
     check_mount "$MT_OPTS" "$MT_EXPORT" "$SNAPSHOT_DIR"
     <% end %>
 
-    exec /var/vcap/packages/tlrt_node/services/tlrt/bin/tlrt_node \
+    exec /var/vcap/packages/tlrt_node/services/ng/tlrt/bin/tlrt_node \
          -c $JOB_DIR/config/tlrt_node.yml \
          >>$LOG_DIR/tlrt_node.stdout.log \
          2>>$LOG_DIR/tlrt_node.stderr.log
