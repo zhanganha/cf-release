@@ -1,0 +1,5 @@
+# abort script on any command that exit with a non zero value
+set -e
+
+tar zxvf wtp/wtp.tar.gz
+cp -a tongwtp/* ${BOSH_INSTALL_TARGET}

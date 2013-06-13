@@ -1,0 +1,14 @@
+---
+name: wtp_gateway
+
+templates:
+  wtp_gateway_ctl: bin/wtp_gateway_ctl
+  wtp_gateway.yml.erb: config/wtp_gateway.yml
+  syslog_forwarder.conf.erb: config/syslog_forwarder.conf
+
+packages:
+  - common
+  - wtp_gateway
+  - ruby
+  - sqlite
+  - syslog_aggregator
